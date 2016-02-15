@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:sec="http://www.springframework.org/security/tags" 
+    
+         >
+
+<!-- <f:view contentType="text/html"> -->
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title><ui:insert name="title" /></title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	
+</h:head>
+
+	<h:body>
+	
+<!-- 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" /> -->
+		<p:dialog modal="true" widgetVar="statusDialog" header="Processing..." draggable="true" closable="false">
+			<p:graphicImage value="/css/images/ajaxloadingbar.gif" />
+		</p:dialog>
+	
+		<div id="container">
+		  <h:form id="toto">
+<!-- 			Welcom  <sec:authentication property="nom"/> <sec:authentication property="authorities"/> -->
+<!-- 			Welcom   <h:outputText  value="#{representantController.representant.nom}"/> -->
+			Welcom   <h:outputText  value="#{securityUserController.getCurrentUser().nom}"/> 
+			<h:commandLink action="#{representantController.logout()}" value="Se déconnecter" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		  </h:form>
+			<div id="header">
+				<h1><ui:insert name="header"/></h1>
+				<div id="menu">
+				<h:form>
+				 	<p:menubar>
+        				<p:submenu label="Fichier" icon="ui-icon-document">
+				            
+				            <p:menuitem value="Fiche Article" url="Fichearticle.xhtml" />
+				            <p:menuitem value="Fiche Client" url="Ficheclient.xhtml" />
+				            <p:menuitem value="Fiche Fournisseur" url="Fichefournisseur.xhtml" />
+            				<p:menuitem value="Fiche TVA" url="FicheTva.xhtml" />
+            				<p:menuitem value="Fiche Unité" url="FicheUnite.xhtml" />
+            				<p:menuitem value="Fiche Mode Réglement" url="FicheModeReglement.xhtml" />
+            				<p:menuitem value="Fiche Représentant" url="FicheRepresentant.xhtml" />
+            				<p:menuitem value="Fiche Societe" url="FicheSociete.xhtml" />
+            				<p:menuitem value="Fiche Payement Client" url="FicheOrdrePayClient.xhtml" />
+            				<p:menuitem value="Fiche Payement Fournisseur" url="FicheOrdrePayFourn.xhtml" />
+            				<p:separator />
+            				<p:menuitem value="Quit" url="#" />
+        				</p:submenu>
+ 
+				        <p:submenu label="Liste" icon="ui-icon-pencil">
+				            <p:menuitem value="Liste Article" url="ListeArticle.xhtml"  />
+				            <p:menuitem value="Liste Client" url="ListeClient.xhtml"  />
+				            <p:menuitem value="Liste Fournisseur" url="ListeFournisseur.xhtml"  />
+				            <p:menuitem value="Liste Mode Réglement" url="ListeModeReg.xhtml"  />
+				            <p:menuitem value="Liste TVA" url="ListeTva.xhtml"  />
+				            <p:menuitem value="Liste Unité" url="ListeUnite.xhtml"  />
+				            <p:menuitem value="Liste Devis Client" url="ListeDevisClient.xhtml"  />
+				            <p:menuitem value="Liste Bon Livraison" url="ListeBonLiv.xhtml"  />
+				            <p:menuitem value="Liste Bon Achat" url="Listebonachat.xhtml"  />
+				            <p:menuitem value="Liste Bon Caisse" url="Listeboncaisse.xhtml"  />
+				            <p:menuitem value="Liste Facture Client" url="ListeFactureClient.xhtml"  />
+				            <p:menuitem value="Liste Avoir Client" url="ListeAvoirClient.xhtml"  />
+				            <p:menuitem value="Liste Ordre Paiement Client" url="ListeOPClient.xhtml"  />
+				            <p:menuitem value="Liste Ordre Paiement Fournisseur" url="ListeOPFournisseur.xhtml"  />
+				        </p:submenu>
+        			</p:menubar>
+				
+					
+					<p:tabMenu activeIndex="#{param.i}">
+						<p:menuitem value="" url="#" style="width:3" disabled="true"  >
+					        <f:param name="i" value="0" />
+					    </p:menuitem>
+
+					    <p:menuitem value="Devis Client" url="Fichedevisclient.xhtml?i=1"  icon="ui-icon-wrench">
+					        <f:param name="i" value="1" />
+					    </p:menuitem>
+					    <p:menuitem value="Bon De Livraison" url="Fichebondelivraison.xhtml?i=2" icon="ui-icon-person">
+					        <f:param name="i" value="2" />
+					    </p:menuitem>
+					    <p:menuitem value="Bon D'achat" url="Fichebonachat.xhtml?i=3" icon="ui-icon-person">
+					        <f:param name="i" value="3" />
+					    </p:menuitem>
+					    <p:menuitem value="Bon De Caisse" url="Ficheboncaisse.xhtml?i=4" icon="ui-icon-person">
+					        <f:param name="i" value="4" />
+					    </p:menuitem>
+					    <p:menuitem value="Facture Client" url="FactureClient.xhtml?i=5" icon="ui-icon-person">
+					        <f:param name="i" value="5" />
+					    </p:menuitem>
+					    <p:menuitem value="Avoir Client" url="FicheAvoirClient_V1.xhtml?i=6" icon="ui-icon-person">
+					        <f:param name="i" value="6" />
+					    </p:menuitem>
+					</p:tabMenu>
+				
+				
+<!-- 					<p:tabMenu activeIndex="#{param.i}"> -->
+<!-- 						<p:menuitem value="" url="#" style="width:3" disabled="true"  > -->
+<!-- 					        <f:param name="i" value="0" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Fournisseur" url="Fichefournisseur.xhtml?i=1"  icon="ui-icon-star"> -->
+<!-- 					        <f:param name="i" value="1" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Client" url="Ficheclient.xhtml?i=2" icon="ui-icon-search"> -->
+<!-- 					        <f:param name="i" value="2" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Article" url="Fichearticle.xhtml?i=3" icon="ui-icon-document"> -->
+<!-- 					        <f:param name="i" value="3" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Devis Client" url="Fichedevisclient.xhtml?i=4"  icon="ui-icon-wrench"> -->
+<!-- 					        <f:param name="i" value="4" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Bon De Livraison" url="Fichebondelivraison.xhtml?i=5" icon="ui-icon-person"> -->
+<!-- 					        <f:param name="i" value="5" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Bon D'achat" url="Fichebonachat.xhtml?i=6" icon="ui-icon-person"> -->
+<!-- 					        <f:param name="i" value="6" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Bon De Caisse" url="Ficheboncaisse.xhtml?i=7" icon="ui-icon-person"> -->
+<!-- 					        <f:param name="i" value="7" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Facture Client" url="FactureClient.xhtml?i=8" icon="ui-icon-person"> -->
+<!-- 					        <f:param name="i" value="8" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					    <p:menuitem value="Avoir Client" url="FicheAvoirClient.xhtml?i=9" icon="ui-icon-person"> -->
+<!-- 					        <f:param name="i" value="9" /> -->
+<!-- 					    </p:menuitem> -->
+<!-- 					</p:tabMenu> -->
+
+				</h:form>
+  				</div>
+			</div>
+			
+			<div id="line"/>
+			<div id="content">
+				<ui:insert name="content"/>	
+			</div>
+			<div id="footer">
+				<ui:insert name="footer"/>
+			</div>
+		</div>
+		
+		
+	</h:body>
+	
+<!-- </f:view> -->
+
+
+</html>

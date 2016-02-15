@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="general.xhtml">
+
+	<ui:define name="title"><h:outputText value="Liste Unité"/></ui:define>
+	<ui:define name="header"><h:outputText value="Liste unité"/>	</ui:define>
+	  <ui:define name="content">
+		<p:growl id="messages"/>
+		
+		<h:form id="formArticle">
+		  <br/>
+		   <h:outputText  value="Recherche : "></h:outputText>
+		   <h:inputText id="rechercheArticle"   ></h:inputText>
+		   <p:commandButton id="recherche"
+					onclick="#{uniteListController.filterUnite()}"
+					title="Recherche"  
+					icon="ui-icon ui-icon-search" 
+					
+					>
+				</p:commandButton>
+			<br/>
+		   <br/>
+		<p:dataTable value="#{uniteListController.unites}" var="art" 
+		 emptyMessage="Table vide." 
+		 id="articleTable" widgetVar="articleTable" >
+			
+			
+			<p:column headerText="Code" style="width: 50px; " >
+				<h:outputText value="#{art.cunite}" />
+			</p:column>
+			<p:column  headerText="Taux" style="width: 50px; ">
+				#{art.desUnite}
+			</p:column>
+			
+			<p:column headerText="operations" style="width: 50px; ">
+			
+				<p:commandButton value="edit"   action="#{uniteListController.selectedUnite(art)}" update=":artForm"  />
+				<p:commandButton value="remove" action="#{uniteListController.remove(art)}" update="formArticle:articleTable, :messages">
+ 					<p:confirm header="Confirmation" message="Etes vous sûr?" icon="ui-icon-alert" /> 
+				</p:commandButton>
+			
+			</p:column>
+		</p:dataTable>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</h:form>
+		<br/>
+		
+		
+		<p:dialog widgetVar="articleDialog" closeOnEscape="true" modal="true" header="Article">
+			<h:form id="artForm">
+<!-- 			<p:messages/> -->
+			<p:growl id="messages"/>
+<!-- 			<p:focus/> -->
+				<h:panelGrid id="pnl"  border="1" columns="2" style="width:400px; height:114px; ">
+							
+				<h:outputText  value="Code : "></h:outputText>
+				<h:inputText id="code" value="#{uniteListController.unite.cunite}" disabled="true" />
+								
+										
+				<h:outputText  value="Taux : "></h:outputText>
+				<h:inputText id="taux"  value="#{uniteListController.unite.desUnite}" ></h:inputText>
+				
+			</h:panelGrid>
+			<br/>
+				<h:commandButton value="Sauvegarder" action="#{uniteListController.update()}" 
+								 update="artForm, :articleTable, :messages" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</h:form>
+		</p:dialog>
+		
+		<h:form>
+		    <p:confirmDialog global="true"  closeOnEscape="true">
+		        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
+		</h:form>
+
+<br />
+		
+		</ui:define>
+	  </ui:composition>	

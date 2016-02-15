@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    >
+    <h:head>
+        <title>Calendar</title>
+<!--      <script name="jquery/jquery.js" library="primefaces"></script>  -->
+     
+    </h:head>
+    <h:body>
+    <ui:composition template="general.xhtml">
+    <ui:define name="title"><h:outputText value="Fiche Devis Client"/></ui:define>
+	<ui:define name="header"><h:outputText value="Fiche Devis Client"/>	</ui:define>
+<br/><br/><br/>
+	    <div >
+	    <ui:define name="content">
+
+						<h:panelGrid  border="1" columns="2"  >
+								<h:outputText value="Informations Pièce"></h:outputText>
+								<h:outputText value="Informations Client"></h:outputText>
+								<h:panelGrid id="pnlinfopiece" border="1" title="tototot" columns="2" >
+									
+									<h:outputLabel value="Numéro:"></h:outputLabel>
+									<h:inputText></h:inputText>
+									
+									<h:outputLabel value="Date Devis :"></h:outputLabel>
+									<p:calendar value="#{calendarManagedBean.date}" locale="fr" pattern="dd/MM/yyyy" showOn="button" navigator="true">
+								    </p:calendar>
+							
+								    <h:outputLabel value="Regime TVA :"></h:outputLabel>
+								<h:selectOneMenu value="#{regimeTVAListController.regimeTva.desRegimeTva}" >
+									<f:selectItems value="#{regimeTVAListController.findDesRegimTva()}" />
+								</h:selectOneMenu>
+								<h:outputLabel value="Fodec :"></h:outputLabel>
+								<h:selectBooleanCheckbox ></h:selectBooleanCheckbox>
+
+								</h:panelGrid>
+							<h:form id="infoclient">
+								<h:panelGrid   border="1" columns="3" >
+									
+										<h:outputText value="Client :"></h:outputText>
+										<h:inputText id="clt_RS" value="#{clientListController.client.raisonSociale}" ></h:inputText>
+										
+											<p:commandButton id="selectClient"
+									 				  onclick="PF('clientDialog').show(); return false;"
+									 				  title="Selectionner Client"  
+									 				  icon="ui-icon ui-icon-search" 
+									 				  update=":dialogform"
+									 				 >
+									 	 	</p:commandButton>
+									 	
+										<h:outputText  value="Adresse : "></h:outputText>
+										<h:inputText id="clt_Add" value="#{clientListController.client.desAdresse}" ></h:inputText>
+										<h:outputLabel value=""></h:outputLabel>
+										<h:outputText  value="Pays : "></h:outputText>
+										<h:inputText id="clt_Pays"  value="#{clientListController.client.pays}" ></h:inputText>
+										<h:outputLabel value=""></h:outputLabel>
+										<h:outputText value="Ville: "></h:outputText>
+										<h:inputText id="clt_ville" value="#{clientListController.client.ville}" ></h:inputText>
+								
+								</h:panelGrid>
+								
+								</h:form>
+									<h:outputText value="item3"></h:outputText>
+									<h:outputText value="item4"></h:outputText>
+								</h:panelGrid>
+							
+
+			
+					<p:dialog  header="Liste Client" widgetVar="clientDialog" modal="true" width="400" resizable="false">
+ 	       			  <h:form id="dialogform"> 
+						<h:outputText value="Value 1:" />
+						<p:dataTable value="#{clientListController.clients}" var="client" id="clientTable">
+							<p:column headerText="Identifiant">	
+
+									<p:commandLink title="Sélectionner" ajax="false" immediate="true"
+												   action="#{clientListController.setClient(client)}" 
+												   update="infoclient"
+												  
+											 	   onclick="PF('clientDialog').hide()"
+											 	   	>			
+						
+					                    <h:outputText value="#{client.cclient}" />
+    								  
+    								 </p:commandLink>
+
+							</p:column>
+							<p:column headerText="Raison Social">
+								#{client.raisonSociale}
+							</p:column>
+						</p:dataTable>
+					</h:form> 
+				</p:dialog>
+
+	    </ui:define>    
+	    </div>
+        
+    </ui:composition>
+   
+    </h:body>
+</h:html>

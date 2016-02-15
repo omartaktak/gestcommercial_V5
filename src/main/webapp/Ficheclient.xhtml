@@ -1,0 +1,67 @@
+	<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="general.xhtml">
+
+	<ui:define name="title"><h:outputText value="Fiche Client"/></ui:define>
+	<ui:define name="header"><h:outputText value="Fiche Client"/></ui:define>
+	<ui:define name="content">
+		<p:growl id="messages"/>
+	    <h:form id="form-unit">
+			<h:panelGrid id="pnl"  border="1" columns="5" style="width:600px; height:114px; ">
+
+				<h:outputText  value="Code : " style=" width: 130; "></h:outputText>
+				<h:inputText id="code" value="#{clientListController.client.cclient}"  ></h:inputText>
+				<h:outputLabel value="" style=" width: 130; " ></h:outputLabel>
+				<h:outputLabel value="Regime TVA :" style=" width: 150; "></h:outputLabel>
+				<h:selectOneMenu value="#{clientListController.client.cregimeTva}" style="width:155px; ">
+					<f:selectItems value="#{regimeTVAListController.findDesRegimTva()}" />
+				</h:selectOneMenu>
+				
+				<h:outputText  value="Raison Social : "></h:outputText>
+				<h:inputText id="rais_social" value="#{clientListController.client.raisonSociale}" ></h:inputText>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputLabel value=""></h:outputLabel>
+				
+				<h:outputText  value="N° R.C : "></h:outputText>
+				<h:inputText id="nrc" value="#{clientListController.client.nregistreCommerce}" ></h:inputText>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputText  value="Mat Fiscale : "></h:outputText>
+				<h:inputText id="mat_fisc" value="#{clientListController.client.matFiscale}" ></h:inputText>
+								
+				<h:outputText value="Tel: "></h:outputText>
+				<h:inputText id="tel" value="#{clientListController.client.tel}" ></h:inputText>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputText value="GSM: "></h:outputText>
+				<h:inputText id="gsm" value="#{clientListController.client.gsm}" ></h:inputText>
+								
+				<h:outputText value="Fax: "></h:outputText>
+				<h:inputText id="fax" value="#{clientListController.client.fax}" ></h:inputText>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputText value="Email: "></h:outputText>
+				<h:inputText id="email" value="#{clientListController.client.email}" ></h:inputText>
+								
+				<h:outputText  value="Adresse : "></h:outputText>
+				<p:inputTextarea rows="3" cols="18" id="addresse" value="#{clientListController.client.desAdresse}" />
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputLabel value=""></h:outputLabel>
+				<h:outputLabel value=""></h:outputLabel>
+					<h:commandButton value="save" actionListener="#{clientListController.save()}" 
+						 update=":messages" />
+					<h:commandButton value="Annuler"  actionListener="#{clientListController.clear()}" 
+						 resetValues="true" />
+
+				<h:outputLabel value=""></h:outputLabel>
+			</h:panelGrid>
+			<br/>
+			<h:commandButton value="Liste Client" ajax="false" action="#{clientListController.redirect()}" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</h:form>
+	
+	</ui:define>
+  
+</ui:composition>
